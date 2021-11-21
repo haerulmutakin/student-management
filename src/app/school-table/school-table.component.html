@@ -1,0 +1,24 @@
+<table mat-table [dataSource]="schoolData">
+    <ng-container matColumnDef="schools">
+        <th mat-header-cell *matHeaderCellDef> Schools </th>
+        <td mat-cell *matCellDef="let element"> {{element.short_name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="students">
+        <th mat-header-cell *matHeaderCellDef> Students</th>
+        <td mat-cell *matCellDef="let element"> {{element.students}} </td>
+    </ng-container>
+    <ng-container matColumnDef="correction">
+        <th mat-header-cell *matHeaderCellDef> Correction </th>
+        <td mat-cell *matCellDef="let element">{{element.correction}}</td>
+    </ng-container>
+    <ng-container matColumnDef="diff">
+        <th mat-header-cell *matHeaderCellDef> Diff </th>
+        <td mat-cell *matCellDef="let element">{{element.diff}}</td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+</table>
+<div class="table-footer">
+    <div class="total">{{schoolData.length}} total</div>
+</div>
