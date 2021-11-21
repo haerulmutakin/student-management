@@ -1,0 +1,49 @@
+<table mat-table [dataSource]="studentsData">
+    <ng-container matColumnDef="students">
+        <th mat-header-cell *matHeaderCellDef>
+            Students
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.student_name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="schoolOrigin">
+        <th mat-header-cell *matHeaderCellDef>
+            School Origin
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.school_origin_name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="schoolCorrecting">
+        <th mat-header-cell *matHeaderCellDef>
+            School Correcting
+        </th>
+        <td mat-cell *matCellDef="let element">
+        <ng-select [items]="schoolCorrecting | correctingOpt: element.school_origin_id"
+            bindLabel="short_name" 
+            bindValue="_id"
+            (change)="onSchoolCorrectingChange(element.index)"
+            [formControl]="schoolCorrectingForm.controls[element.index]">
+        </ng-select>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="crossCorrector">
+        <th mat-header-cell *matHeaderCellDef>
+            Cross Corrector
+        </th>
+        <td mat-cell *matCellDef="let element"> 
+        <ng-select [items]="crossCorectors[element.index]" 
+            bindLabel="first_name" 
+            bindValue="_id"
+            (change)="onCrossCorrectorChange()"
+            [formControl]="crossCorrectingForm.controls[element.index]">
+        </ng-select>
+        </td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="columns" class="student-table-header"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+</table>
+<div class="table-footer">
+    <div class="total">
+        {{studentsData.filteredData.length}} total / {{crossCorrectingForm.value | unassignedTotal}} remain to be assigned
+    </div>
+    <mat-paginator [pageSize]="10" showFirstLastButtons></mat-paginator>
+</div>
